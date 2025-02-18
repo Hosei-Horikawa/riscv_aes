@@ -1,6 +1,6 @@
 module aes_v6 (ark,a,ss,ssm,va,vb,inv,vc);
-    input             ark,ss,ssm,inv;
-    input      [31:0] a;
+    input          ark,ss,ssm,inv;
+    input   [31:0] a;
     input  [127:0] va,vb;
     output [127:0] vc;
     
@@ -10,7 +10,7 @@ module aes_v6 (ark,a,ss,ssm,va,vb,inv,vc);
     wire [127:0] result_ss;
     wire [127:0] result_ssm;            
     
-    wire    [31:0] rot_vb = {vb[103:96],vb[127:104]};
+    wire  [31:0] rot_vb = {vb[103:96],vb[127:104]};
     wire [127:0] tmp_ss;
     
     aes_sbox_shift_128 ss128(ark,rot_vb,subshift,vb,inv,c,tmp_ss);
@@ -68,33 +68,33 @@ module aes_v6 (ark,a,ss,ssm,va,vb,inv,vc);
     function [127:0] result;
         input [2:0] asw;
         input [127:0] ark,ss,ssm;
-        case (asw)
-            3'b100 : result = ark;
-            3'b010 : result = ss;
-            3'b001 : result = ssm;
-            default : result = 0;
-        endcase
+          case (asw)
+                3'b100 : result = ark;
+                3'b010 : result = ss;
+                3'b001 : result = ssm;
+                default : result = 0;
+          endcase
     endfunction
     
     //GF(2^8) 
     function [7:0] xt2; //x times 2
         input [7:0] a;
-        xt2 = (a << 1) ^ (a[7] ? 8'h1b : 8'b0) ;
+          xt2 = (a << 1) ^ (a[7] ? 8'h1b : 8'b0) ;
     endfunction
   
     function [7:0] xtN; //x times N
         input[7:0] a;
         input[3:0] b;
-        xtN = (b[0] ?             a   : 0) ^
-              (b[1] ? xt2(        a)  : 0) ^
-              (b[2] ? xt2(xt2(    a)) : 0) ^
-              (b[3] ? xt2(xt2(xt2(a))): 0) ;
+          xtN = (b[0] ?             a   : 0) ^
+                (b[1] ? xt2(        a)  : 0) ^
+                (b[2] ? xt2(xt2(    a)) : 0) ^
+                (b[3] ? xt2(xt2(xt2(a))): 0) ;
     endfunction
     
     function [7:0] mixcolumn;
         input [7:0] b0, b1, b2, b3;
         input       inv;
-        mixcolumn = (inv) ? xtN(b0,4'he) ^ xtN(b1,4'hb) ^ xtN(b2,4'hd) ^ xtN(b3,4'h9)
-                          : xt2(b0) ^ (xt2(b1) ^ b1) ^ b2 ^ b3;
+          mixcolumn = (inv) ? xtN(b0,4'he) ^ xtN(b1,4'hb) ^ xtN(b2,4'hd) ^ xtN(b3,4'h9)
+                            : xt2(b0) ^ (xt2(b1) ^ b1) ^ b2 ^ b3;
     endfunction
 endmodule
