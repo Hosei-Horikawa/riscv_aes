@@ -1,5 +1,5 @@
 module riscv_rv32imv_aes128_v6_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
-    parameter     VLEN = 128;                   // bits, hardware implementation
+    parameter         VLEN = 128;          // bits, hardware implementation
     input             clk, clrn;           // clock and reset
     input      [31:0] inst;                // instruction
     input  [VLEN-1:0] mem;                  // load data
@@ -219,7 +219,7 @@ module riscv_rv32imv_aes128_v6_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
         end else begin
             if (wreg && |rd) 
                 regfile[rd] <= data_2_rf;                  // write port
-				if (wpc) begin
+	    if (wpc) begin
                 // write port
                 if (we[0]) vregfile[vd][ 31:  0] <= v_data_2_rf[ 31:  0];
                 if (we[1]) vregfile[vd][ 63: 32] <= v_data_2_rf[ 63: 32];
@@ -399,8 +399,8 @@ module riscv_rv32imv_aes128_v6_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
         vta   = 0;
         vma   = 0; 
         v_alu_out = 0;                                     // alu output for vector
-  		    v_mem_out = 0; 
-  		    vector   = 0;
+  	v_mem_out = 0; 
+  	vector   = 0;
         case (1'b1)
             i_add: begin                                   // add
                 alu_out = a + b32;
@@ -588,8 +588,8 @@ module riscv_rv32imv_aes128_v6_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
               vsew  [2:0] = zimm[5:3];
               vta         = zimm[6];
               vma         = zimm[7]; 
-				      alu_out = d;
-				      wreg = 1;end
+	      alu_out = d;
+	      wreg = 1;end
             v_vle32: begin
               alu_out  = {ap12,ap8,ap4,a};
               m_addr  = {alu_out[31:2] ,2'b00};        // alu_outX[1:0] != 0, exception
@@ -597,7 +597,7 @@ module riscv_rv32imv_aes128_v6_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
               v_mem_out = {mem};
               wpc    = 1;
               vector = 1;
-				    end
+	    end
             v_vse32: begin
               alu_out  = {ap12,ap8,ap4,a};
               m_addr  = {alu_out[31:2] ,2'b00};        // alu_outX[1:0] != 0, exception
