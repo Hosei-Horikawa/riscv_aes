@@ -1,17 +1,17 @@
 module aes_v3 (ark,a,ss,ssm,vb,inv,vc);
     input             ark,ss,ssm,inv;
-	 input      [31:0] a;
+    input      [31:0] a;
     parameter         VLEN = 128;
     input  [VLEN-1:0] vb;
     output [VLEN-1:0] vc;
     
-    wire      [31:0] c;
-    wire   [127:0] result_ark;
+    wire     [31:0] c;
+    wire    [127:0] result_ark;
     wire            subshift = ss | ssm;
     wire [VLEN-1:0] result_ss;
     wire [VLEN-1:0] result_ssm;            
     
-    wire    [31:0] rot_vb = {vb[103:96],vb[127:104]};
+    wire     [31:0] rot_vb = {vb[103:96],vb[127:104]};
     
     aes_sbox_shift_128 ss128(ark,rot_vb,subshift,vb,inv,c,result_ss);
     
@@ -76,22 +76,22 @@ module aes_v3 (ark,a,ss,ssm,vb,inv,vc);
     //GF(2^8) 
     function [7:0] xt2; //x times 2
         input [7:0] a;
-        xt2 = (a << 1) ^ (a[7] ? 8'h1b : 8'b0) ;
+          xt2 = (a << 1) ^ (a[7] ? 8'h1b : 8'b0) ;
     endfunction
   
     function [7:0] xtN; //x times N
         input[7:0] a;
         input[3:0] b;
-        xtN = (b[0] ?             a   : 0) ^
-              (b[1] ? xt2(        a)  : 0) ^
-              (b[2] ? xt2(xt2(    a)) : 0) ^
-              (b[3] ? xt2(xt2(xt2(a))): 0) ;
+          xtN = (b[0] ?             a   : 0) ^
+                (b[1] ? xt2(        a)  : 0) ^
+                (b[2] ? xt2(xt2(    a)) : 0) ^
+                (b[3] ? xt2(xt2(xt2(a))): 0) ;
     endfunction
     
     function [7:0] mixcolumn;
         input [7:0] b0, b1, b2, b3;
         input       inv;
-        mixcolumn = (inv) ? xtN(b0,4'he) ^ xtN(b1,4'hb) ^ xtN(b2,4'hd) ^ xtN(b3,4'h9)
-                          : xt2(b0) ^ (xt2(b1) ^ b1) ^ b2 ^ b3;
+          mixcolumn = (inv) ? xtN(b0,4'he) ^ xtN(b1,4'hb) ^ xtN(b2,4'hd) ^ xtN(b3,4'h9)
+                            : xt2(b0) ^ (xt2(b1) ^ b1) ^ b2 ^ b3;
     endfunction
 endmodule
