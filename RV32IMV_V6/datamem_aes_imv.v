@@ -5,18 +5,18 @@ module datamem_aes128_imv (addr,datain,we,clk,dataout,vector);
     input  [VLEN-1:0] addr,datain;
     output [VLEN-1:0] dataout;
     reg    [31:0] ram [0:69];
-	 assign dataout = (vector) ? 
-							{ram[addr[104:98]],ram[addr[ 72:66]],ram[addr[ 40:34]],ram[addr[8:2]]} 
-							: {96'h0,ram[addr[8:2]]};
+    assign dataout = (vector) ? 
+		          {ram[addr[104:98]],ram[addr[ 72:66]],ram[addr[ 40:34]],ram[addr[8:2]]} 
+		        : {96'h0,ram[addr[8:2]]};
     always @ (posedge clk)
       case (we)
         4'b1111: begin
                     ram[addr[10:2]] = datain[31:0];
                     if (vector) begin
-								ram[addr[ 42:34]] = datain[ 63:32];
-								ram[addr[ 74:66]] = datain[ 95:64];
-								ram[addr[106:98]] = datain[127:96];
-						  end
+			ram[addr[ 42:34]] = datain[ 63:32];
+			ram[addr[ 74:66]] = datain[ 95:64];
+			ram[addr[106:98]] = datain[127:96];
+		    end
                  end
         4'b0011: ram[addr[9:2]] = datain[31:0];
         4'b0001: ram[addr[8:2]] = datain[31:0];
