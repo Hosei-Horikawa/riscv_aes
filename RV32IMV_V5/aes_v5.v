@@ -97,7 +97,7 @@ module aes_v5 (sub,a,sbsr,mix,vb,inv,vc);
 
     wire [127:0] result_sbsr = inv ? sbsr_inv : sbsr_fwd;
     
-    wire [31:0] sbfwd = {sbfwd_30,sbfwd_33,sbfwd_32,sbfwd_31};
+    wire  [31:0] sbfwd = {sbfwd_30,sbfwd_33,sbfwd_32,sbfwd_31};
     wire [127:0] result_sb;
     assign result_sb[ 31: 0] = sbfwd ^ a ^ vb[31:0];
     assign result_sb[ 63:32] = sbfwd ^ a ^ vb[31:0] ^ vb[63:32];
