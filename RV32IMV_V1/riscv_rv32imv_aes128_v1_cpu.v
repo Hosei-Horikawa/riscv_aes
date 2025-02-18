@@ -1,5 +1,5 @@
 module riscv_rv32imv_aes128_v1_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
-    parameter     VLEN = 128;                   // bits, hardware implementation
+    parameter         VLEN = 128;          // bits, hardware implementation
     input             clk, clrn;           // clock and reset
     input      [31:0] inst;                // instruction
     input  [VLEN-1:0] mem;                  // load data
