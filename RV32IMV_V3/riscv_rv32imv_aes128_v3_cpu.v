@@ -1,5 +1,5 @@
 module riscv_rv32imv_aes128_v3_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
-    parameter     VLEN = 128;                   // bits, hardware implementation
+    parameter         VLEN = 128;          // bits, hardware implementation
     input             clk, clrn;           // clock and reset
     input      [31:0] inst;                // instruction
     input  [VLEN-1:0] mem;                  // load data
@@ -219,7 +219,7 @@ module riscv_rv32imv_aes128_v3_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
         end else begin
             if (wreg && |rd) 
                 regfile[rd] <= data_2_rf;                  // write port
-				if (wpc) begin
+		if (wpc) begin
                 // write port
                 if (we[0]) vregfile[vd][ 31:  0] <= v_data_2_rf[ 31:  0];
                 if (we[1]) vregfile[vd][ 63: 32] <= v_data_2_rf[ 63: 32];
