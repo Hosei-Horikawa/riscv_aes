@@ -162,7 +162,7 @@ module riscv_rv32im_aes128_m3_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem);
         end
         else begin
             if (!ready_mul) begin
-		            change_mul = 0;
+		change_mul = 0;
                 if (m_mul && !re_mul) begin
                     mr = a * b;
                     change_mul = 1;
