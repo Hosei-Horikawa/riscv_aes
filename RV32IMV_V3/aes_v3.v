@@ -54,10 +54,10 @@ module aes_v3 (ark,a,ss,ssm,vb,inv,vc);
     wire [ 7:0] mixs_32 = mixcolumn(mix_32, mix_33, mix_30, mix_31, inv);
     wire [ 7:0] mixs_33 = mixcolumn(mix_33, mix_30, mix_31, mix_32, inv);
    
-   assign result_ssm = {mixs_33,mixs_32,mixs_31,mixs_30,
-                        mixs_23,mixs_22,mixs_21,mixs_20,
-                        mixs_13,mixs_12,mixs_11,mixs_10,
-                        mixs_03,mixs_02,mixs_01,mixs_00};
+    assign result_ssm = {mixs_33,mixs_32,mixs_31,mixs_30,
+                         mixs_23,mixs_22,mixs_21,mixs_20,
+                         mixs_13,mixs_12,mixs_11,mixs_10,
+                         mixs_03,mixs_02,mixs_01,mixs_00};
 
     assign vc = result({ark,ss,ssm},
                         result_ark,result_ss,result_ssm);
@@ -65,12 +65,12 @@ module aes_v3 (ark,a,ss,ssm,vb,inv,vc);
     function [127:0] result;
         input [2:0] asw;
         input [127:0] ark,ss,ssm;
-        case (asw)
-            3'b100 : result = ark;
-            3'b010 : result = ss;
-            3'b001 : result = ssm;
-            default : result = 0;
-        endcase
+          case (asw)
+                3'b100 : result = ark;
+                3'b010 : result = ss;
+                3'b001 : result = ssm;
+                default : result = 0;
+          endcase
     endfunction
     
     //GF(2^8) 
