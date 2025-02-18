@@ -1,6 +1,6 @@
 module aes_v2 (ark,a,subshift,mix,vb,inv,vc);
-    input             ark,subshift,mix,inv;
-    input      [31:0] a;
+    input          ark,subshift,mix,inv;
+    input   [31:0] a;
     input  [127:0] vb;
     output [127:0] vc;
     
@@ -9,7 +9,7 @@ module aes_v2 (ark,a,subshift,mix,vb,inv,vc);
     wire [127:0] result_subshift;
     wire [127:0] result_mixcols;
     
-    wire    [31:0] rot_vb = {vb[103:96],vb[127:104]};
+    wire  [31:0] rot_vb = {vb[103:96],vb[127:104]};
     
     aes_sbox_shift_128 ss(ark,rot_vb,subshift,vb,inv,c,result_subshift);
     
@@ -58,9 +58,9 @@ module aes_v2 (ark,a,subshift,mix,vb,inv,vc);
                              mixs_03, mixs_02, mixs_01, mixs_00};
     
     assign vc = result({ark,subshift,mix},
-                result_ark,result_subshift,result_mixcols);
+                       result_ark,result_subshift,result_mixcols);
 	  
-	  function [127:0] result;
+    function [127:0] result;
       input [2:0] asw;
       input [127:0] ark,ss,mix;
         case (asw)
@@ -87,8 +87,8 @@ module aes_v2 (ark,a,subshift,mix,vb,inv,vc);
     endfunction
     
     function [7:0] mixcolumn;
-        input [7:0] b0, b1, b2, b3;
-        input       inv;
+      input [7:0] b0, b1, b2, b3;
+      input       inv;
         mixcolumn = (inv) ? xtN(b0,4'he) ^ xtN(b1,4'hb) ^ xtN(b2,4'hd) ^ xtN(b3,4'h9)
                           : xt2(b0) ^ (xt2(b1) ^ b1) ^ b2 ^ b3;
     endfunction
