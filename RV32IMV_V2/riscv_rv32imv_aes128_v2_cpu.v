@@ -597,7 +597,7 @@ module riscv_rv32imv_aes128_v2_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
               v_mem_out = {mem};
               wpc    = 1;
               vector = 1;
-				    end
+	    end
             v_vse32: begin
               alu_out  = {ap12,ap8,ap4,a};
               m_addr  = {alu_out[31:2] ,2'b00};        // alu_outX[1:0] != 0, exception
