@@ -219,7 +219,7 @@ module riscv_rv32imv_aes128_v4_cpu (clk,clrn,inst,mem,pc,alu_out,b,wmem,vector);
         end else begin
             if (wreg && |rd) 
                 regfile[rd] <= data_2_rf;                  // write port
-				if (wpc) begin
+	    if (wpc) begin
                 // write port
                 if (we[0]) vregfile[vd][ 31:  0] <= v_data_2_rf[ 31:  0];
                 if (we[1]) vregfile[vd][ 63: 32] <= v_data_2_rf[ 63: 32];
