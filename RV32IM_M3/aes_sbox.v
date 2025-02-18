@@ -529,6 +529,6 @@ module aes_sbox(sub,in,inv,out);
         254: out_inv = 8'h0c;
         255: out_inv = 8'h7d;
     endcase
-end
+  end
 
 endmodule
